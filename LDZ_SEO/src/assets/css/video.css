@@ -107,17 +107,6 @@
     z-index: -1;
 }
 
-body .home-banner-container .innerContainer .upper .graphic .text:before {
-    height: 419px;
-    left: -137px;
-    top: -97px;
-}
-
-/* body .home-banner-container .innerContainer .upper .graphic .text h1 {
-    color: #fff;
-    max-width: 752px;
-} */
-
 .home-banner-container .innerContainer .upper .graphic .text h1 {
     color: initial;
     color: var(--primary-color);
@@ -221,11 +210,6 @@ body .home-banner-container .innerContainer .upper .graphic .text:before {
     color: #fff;
 }
 
-body .home-banner-container .innerContainer .upper .graphic .text span {
-    color: #fff;
-    display: block;
-}
-
 .home-banner-container .innerContainer .upper .graphic .text div>span {
     color: #fff;
     font-size: 2em;
@@ -250,18 +234,6 @@ body .home-banner-container .innerContainer .upper .graphic .text span {
         top: -45px;
         width: 391px;
     }
-
-    body .home-banner-container .innerContainer .upper .graphic .text:before {
-        height: 329px;
-        left: -42px;
-        top: -89px;
-    }
-
-
-    /* body .home-banner-container .innerContainer .upper .graphic .text h1 {
-        color: #fff;
-        max-width: 410px;
-    } */
 
     .home-banner-container .innerContainer .upper .graphic .text h1 {
         font-size: 50px;
@@ -333,21 +305,11 @@ body .home-banner-container .innerContainer .upper .graphic .text span {
         width: 391px;
     }
 
-    body .home-banner-container .innerContainer .upper .graphic .text:before {
-        height: 306px;
-        left: -42px;
-        top: -87px;
-    }
-
     .home-banner-container .innerContainer .upper .graphic .text h1 {
         font-size: 35px;
         line-height: 35px;
         max-width: 380px;
         width: 100%;
-    }
-
-    body .home-banner-container .innerContainer .upper .graphic .text h1 {
-        max-width: 365px;
     }
 
     .home-banner-container .innerContainer .upper .graphic .text p {
@@ -412,14 +374,6 @@ body .home-banner-container .innerContainer .upper .graphic .text span {
         width: 391px;
     }
 
-    body .home-banner-container .innerContainer .upper .graphic .text:before {
-        left: -32px;
-    }
-
-    body .home-banner-container .innerContainer .upper .graphic .text h1 {
-        max-width: 266px;
-    }
-
     .home-banner-container .innerContainer .upper .graphic .text div>span {
         font-size: 1em;
     }
@@ -435,10 +389,6 @@ body .home-banner-container .innerContainer .upper .graphic .text span {
         left: -100px;
         top: -21px;
         width: 391px;
-    }
-
-    body .home-banner-container .innerContainer .upper .graphic .text:before {
-        top: -80px;
     }
 
     .home-banner-container .innerContainer .upper .graphic .text h1 {
@@ -490,18 +440,6 @@ body .home-banner-container .innerContainer .upper .graphic .text span {
         width: 391px;
     }
 
-    body .home-banner-container .innerContainer .upper .graphic .text:before {
-        height: 276px;
-        left: -42px;
-        top: -75px;
-    }
-
-
-    /* body .home-banner-container .innerContainer .upper .graphic .text h1 {
-        color: #fff;
-        max-width: 410px;
-    } */
-
     .home-banner-container .innerContainer .upper .graphic .text h1 {
         font-size: 27px;
         line-height: 27px;
@@ -523,9 +461,5 @@ body .home-banner-container .innerContainer .upper .graphic .text span {
         font-size: 14px;
         letter-spacing: 0;
         margin-top: 25px;
-    }
-
-    body .home-banner-container .innerContainer .upper .graphic .text p {
-        margin-top: 10px;
     }
 }

@@ -26,6 +26,11 @@ const VideoSection = () => {
 
   return (
     <>
+      {themeSettings?.editorStyle && (
+        <Helmet>
+          <style type="text/css">{themeSettings.editorStyle}</style>
+        </Helmet>
+      )}
       {homeVideoSettings?.eventDetailBackImage && (
         <Helmet>
           <link
@@ -75,11 +80,11 @@ const VideoSection = () => {
               >
                 <div>
                   {/* Annual code */}
-                  {/* <span>
-                    4
-                    <sup>th</sup>
+                  <span>
+                    2
+                    <sup>nd</sup>
                     Annual
-                  </span> */}
+                  </span>
                   <h1 dangerouslySetInnerHTML={{
                     __html: themeSettings?.headerContent
                   }}>
