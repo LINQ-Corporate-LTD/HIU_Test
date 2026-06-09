@@ -1,8 +1,9 @@
 """
-Parse 2 sections from the mapping Google Doc and upload to DB:
+Parse 3 sections from the mapping Google Doc and upload to DB:
 
-  Event Leaders        -> eventLeaders      (leaderName, leaderLogo from Drive)
-  Event Past Attendees -> eventPastAttandees (pastAttandeeName, pastAttandeeLogo from Drive)
+  Event Leaders        -> eventLeaders        (leaderName, leaderLogo from Drive)
+  Event Past Attendees -> eventPastAttandees   (pastAttandeeName, pastAttandeeLogo from Drive)
+  Core Attendees       -> eventCoreAttandees   (corAttandeeName — names only, no logo)
 
 Drive subfolders:
   LDZ-26 Meet The Leaders  -> leaderLogo       (filename = leaderName)
@@ -24,7 +25,7 @@ from bs4 import BeautifulSoup
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from Event.models import eventLeaders, eventPastAttandees
+from Event.models import eventCoreAttandees, eventLeaders, eventPastAttandees
 
 from ._drive_utils import build_drive_service, download_drive_file, list_drive_folder
 
@@ -95,12 +96,26 @@ def _find_file_for_name(name: str, source_dir: str):
 # ── Doc parsers ────────────────────────────────────────────────────────────────
 
 def _parse_name_list(soup: BeautifulSoup, section_keyword: str) -> list:
-    """Find the h5 whose text contains section_keyword, return li text list."""
+    """Find a heading or paragraph containing section_keyword, return li text list.
+    Checks h5 tags first (standard mapping-doc format), then falls back to p tags
+    that begin with 'keyword:' (used for Core Attendees section)."""
+    keyword_lower = section_keyword.lower()
+
+    # Primary: h5 headings
     for h in soup.find_all("h5"):
-        if section_keyword.lower() in _clean(h.get_text(strip=True)).lower():
+        if keyword_lower in _clean(h.get_text(strip=True)).lower():
             ol = h.find_next_sibling("ol")
             if ol:
                 return [_clean(li.get_text(strip=True)) for li in ol.find_all("li") if _clean(li.get_text(strip=True))]
+
+    # Fallback: paragraph labels like "Core Attendees:" followed by an ol
+    for p in soup.find_all("p"):
+        text = _clean(p.get_text(strip=True)).lower()
+        if keyword_lower in text:
+            ol = p.find_next_sibling("ol")
+            if ol:
+                return [_clean(li.get_text(strip=True)) for li in ol.find_all("li") if _clean(li.get_text(strip=True))]
+
     return []
 
 
@@ -140,9 +155,13 @@ class Command(BaseCommand):
 
         soup = BeautifulSoup(html, "html.parser")
 
-        leader_names   = _parse_name_list(soup, "Event Leaders")
-        attendee_names = _parse_name_list(soup, "Event Past Attendees")
-        self.stdout.write(f"  Leaders: {len(leader_names)}, Past Attendees: {len(attendee_names)}")
+        leader_names        = _parse_name_list(soup, "Event Leaders")
+        attendee_names      = _parse_name_list(soup, "Event Past Attendees")
+        core_attendee_names = _parse_name_list(soup, "Core Attendees")
+        self.stdout.write(
+            f"  Leaders: {len(leader_names)}, Past Attendees: {len(attendee_names)}, "
+            f"Core Attendees: {len(core_attendee_names)}"
+        )
 
         # ── Download Drive subfolders ─────────────────────────────────────────
         _tmpdir = tempfile.mkdtemp(prefix="ldz_alf_")
@@ -182,6 +201,7 @@ class Command(BaseCommand):
         # ── Upload sections ───────────────────────────────────────────────────
         self._upload_leaders(leader_names,   leaders_dir,   base_url, upload_api, dry_run)
         self._upload_attendees(attendee_names, attendees_dir, base_url, upload_api, dry_run)
+        self._upload_core_attendees(core_attendee_names, dry_run)
 
         self.stdout.write(self.style.SUCCESS("\nAll done."))
 
@@ -263,5 +283,35 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(
             f"\nPast Attendees: {created} created, {updated} updated, {no_file} no image."
+        ))
+
+    # ── Core Attendees ────────────────────────────────────────────────────────
+
+    def _upload_core_attendees(self, names, dry_run):
+        self.stdout.write(f"\n--- Core Attendees ({len(names)}) ---")
+        created = updated = 0
+
+        for name in names:
+            self.stdout.write(f"\n  {name}")
+
+            if dry_run:
+                continue
+
+            obj, was_created = eventCoreAttandees.objects.get_or_create(
+                corAttandeeName=name,
+                isDelete="No",
+                defaults={"created_by": "Admin", "updated_by": "Admin"},
+            )
+            obj.updated_by = "Admin"
+            obj.save()
+            tag = "[created]" if was_created else "[updated]"
+            self.stdout.write(self.style.SUCCESS(f"    {tag}"))
+            if was_created:
+                created += 1
+            else:
+                updated += 1
+
+        self.stdout.write(self.style.SUCCESS(
+            f"\nCore Attendees: {created} created, {updated} updated."
         ))
 

@@ -198,13 +198,25 @@ def _get_url(drive_filename: str, source_dir, base_url: str, upload_api: str, dr
     return None, False
 
 
+_INVALID_WIN_CHARS = re.compile(r'[<>:"/\\|?*]')
+
+
+def _sanitize_filename(name: str) -> str:
+    """Mirror the sanitization applied by _drive_utils: replace Windows-invalid chars with hyphen."""
+    return _INVALID_WIN_CHARS.sub("-", name)
+
+
 def _get_news_image_url(title: str, source_dir, base_url: str, upload_api: str, dry_run: bool, prefix: str = "LDZ"):
-    """Convenience wrapper for news images named '{prefix}_{title}.jpg'.
-    Tries colon replaced by hyphen (Drive API sanitizer) and underscore (legacy)."""
-    for candidate in (title, title.replace(":", "-"), title.replace(":", "_")):
-        url, uploaded = _get_url(f"{prefix}_{candidate}.jpg", source_dir, base_url, upload_api, dry_run)
-        if url:
-            return url, uploaded
+    """Convenience wrapper for news images named '{prefix}_{sanitized_title}.{ext}'.
+    Tries the raw title first, then the Drive-sanitized form (all Windows-invalid chars → hyphen),
+    and .jpg, .png, and .webp extensions."""
+    sanitized = _sanitize_filename(title)
+    candidates = [title] if title == sanitized else [title, sanitized]
+    for candidate in candidates:
+        for ext in ("jpg", "png", "webp"):
+            url, uploaded = _get_url(f"{prefix}_{candidate}.{ext}", source_dir, base_url, upload_api, dry_run)
+            if url:
+                return url, uploaded
     return None, False
 
 

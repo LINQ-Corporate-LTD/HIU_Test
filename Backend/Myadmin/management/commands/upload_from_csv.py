@@ -32,6 +32,7 @@ from Myadmin.models import (
     homePageNavMainCategories,
     homePageNavSubCategories,
     newsCategory,
+    sponsorCards,
     toEmails,
 )
 
@@ -105,6 +106,7 @@ class Command(BaseCommand):
             # sponsorPackageAddOnTypes must come before sponsorPackageAddOns (FK)
             ("Event_sponsorpackageaddontypes.csv",    self._upload_sponsor_addon_types),
             ("Event_sponsorpackageaddons.csv",        self._upload_sponsor_addons),
+            ("Myadmin_sponsorcards.csv",              self._upload_sponsor_cards),
         ]
 
         for filename, handler in steps:
@@ -886,3 +888,45 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(
                 f"sponsorPackageAddOns: {created} created, {updated} updated, {skipped} skipped."
             ))
+
+    # ── sponsorCards ──────────────────────────────────────────────────────────
+
+    def _upload_sponsor_cards(self, filepath, ctx, dry_run):
+        self.stdout.write("\n--- sponsorCards ---")
+        rows = _read_csv(filepath)
+        created = updated = 0
+
+        for row in rows:
+            title       = _str(row.get("title", ""))
+            price       = _str(row.get("price", ""))
+            description = _str(row.get("description", ""))
+            is_del      = _str(row.get("isDelete", "No"), "No")
+            created_by  = _str(row.get("created_by", ""), "Admin")
+            updated_by  = _str(row.get("updated_by", ""), "Admin")
+
+            if not title:
+                continue
+
+            self.stdout.write(f"  {title}")
+            if dry_run:
+                continue
+
+            obj, was_created = sponsorCards.objects.get_or_create(
+                title=title,
+                defaults={"price": price, "description": description,
+                          "isDelete": is_del, "created_by": created_by, "updated_by": updated_by},
+            )
+            if not was_created:
+                obj.price = price
+                obj.description = description
+                obj.isDelete = is_del
+                obj.updated_by = updated_by
+                obj.save()
+                self.stdout.write(self.style.WARNING("    [updated]"))
+                updated += 1
+            else:
+                self.stdout.write(self.style.SUCCESS("    [created]"))
+                created += 1
+
+        if not dry_run:
+            self.stdout.write(self.style.SUCCESS(f"sponsorCards: {created} created, {updated} updated."))
