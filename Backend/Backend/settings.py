@@ -122,7 +122,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hiu_test',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': '1902',
         'HOST': 'localhost',
         'PORT': '5432',
     }
