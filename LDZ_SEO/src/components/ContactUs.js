@@ -1056,7 +1056,7 @@ const ContactUs = () => {
                         : helper?.helpingPersonDesignation}
                     </p>
                     <a
-                      href={`mailto:${helper?.helpingPersonEmail}?subject=Lithium Downstream Summit 2026`}
+                      href={`mailto:${helper?.helpingPersonEmail}?subject=Hydrogen Infrastructure Summit 2026`}
                     >
                       <img
                         src={emailIcon}

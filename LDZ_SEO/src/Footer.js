@@ -6,9 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSSRData } from "./common/useSSRData";
 import { useApiData } from "../src/common/ApiContext";
 const emailImage =
-  "https://www.desalination-resource-recovery.com/images/icons/icon-mail.png";
+  "/images/WebCommonImages/icon-mail.png";
 const linkedInIcon =
-  "https://www.desalination-resource-recovery.com/images/icons/icon-linkedin.png";
+  "/images/WebCommonImages/icon-linkedin.png";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -270,7 +270,7 @@ const Footer = () => {
             </div>
             <div className="Footer_footerQuickLinks__dTpfQ">
               <h5>CONTACT US</h5>
-              <a href="mailto:delegates@iq-hub.com?subject=Lithium Downstream Summit 2026">
+              <a href="mailto:delegates@iq-hub.com?subject=Hydrogen Infrastructure Summit 2026">
                 Email
               </a>
               <a href="/pay-online">Pay Online</a>
@@ -300,7 +300,7 @@ const Footer = () => {
               IQ International PTe. LTD
             </a>
           </p>
-          <p>©2026 Lithium Downstream Summit 2026</p>
+          <p>©2026 Hydrogen Infrastructure Summit 2026</p>
         </div>
         <div
           style={{

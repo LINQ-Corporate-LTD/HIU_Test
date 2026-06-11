@@ -1069,7 +1069,7 @@ const BookingForm = () => {
               <span className="PageForm_divide__vwhn0">|</span>IQ International PTe.
               LTD
             </p>
-            <p>©2026 Lithium Downstream Summit 2026</p>
+            <p>©2026 Hydrogen Infrastructure Summit 2026</p>
           </div>
         </div>
       </div>

@@ -115,7 +115,7 @@ const Faq = () => {
                 assistance, our dedicated delegate services team is always here
                 to help. Feel free to reach out to us at
                 <a
-                  href="mailto:delegates@iq-hub.com?subject=Lithium Downstream Summit 2026"
+                  href="mailto:delegates@iq-hub.com?subject=Hydrogen Infrastructure Summit 2026"
                   style={{ color: "black" }}
                 >
                   {" "}

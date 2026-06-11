@@ -411,7 +411,7 @@ const Sponsors = () => {
   }, []);
 
   const sponsorLogoBlack =
-    "https://www.direct-lithium-extraction-show.com/api/images/sponsor/1757675931045-678212680.png";
+    "https://www.hydrogen-infrastructure-summit.com/api/images/sponsor/1757675931045-678212680.png";
 
   const pageSeo = usePageSeo("sponsors");
   const seoTitle = pageSeo.pageMetaTitle;
@@ -442,7 +442,7 @@ const Sponsors = () => {
                   <div
                     className="DetailsContainer_imageContainer__ncJwH"
                     style={{
-                      backgroundImage: `url(https://www.desalination-resource-recovery.com/images/sponsor-image.png)`,
+                      backgroundImage: `url(/images/WebImages/sponsor-image.png)`,
                       backgroundSize: "cover",
                     }}
                   ></div>
@@ -987,7 +987,7 @@ const Sponsors = () => {
                       <p>
                         <img src={emailIcon} alt="emil icon"></img>
                         <a
-                          href={`mailto:${item?.companyPersonEmail}?subject=Lithium &amp; Downstream Summit 2026`}
+                          href={`mailto:${item?.companyPersonEmail}?subject=Hydrogen &amp; Infrastructure Summit 2026`}
                         >
                           {" "}
                           {item?.companyPersonEmail}

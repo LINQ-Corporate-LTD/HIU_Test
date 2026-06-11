@@ -1225,7 +1225,7 @@ const AddSponsorDelegateForm = () => {
             IQ International PTe.LTD
           </span>
         </p>
-        <p>©2026 Lithium Downstream Summit 2026</p>
+        <p>©2026 Hydrogen Infrastructure Summit 2026</p>
       </div>
     </div>
   );
