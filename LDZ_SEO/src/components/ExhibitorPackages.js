@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { cleanHtml } from "../utils/cleanHtml";
 import { useNavigate } from "react-router-dom";
 import "../../src/assets/css/ExhibitorPackages.css";
 import Navbar from "./Navbar";
@@ -133,29 +134,6 @@ const ExhibitorPackages = () => {
     }
   };
 
-  const cleanHtml = (html) => {
-    if (!html) return "";
-
-    // Remove outer quotes and unescape HTML
-    let cleaned = html.replace(/^"(.*)"$/, "$1");
-
-    // Unescape quotes
-    cleaned = cleaned.replace(/\\"/g, '"');
-
-    // Ensure all external links have proper attributes
-    cleaned = cleaned.replace(
-      /<a\s+href=["']([^"']+)["'][^>]*>/gi,
-      (match, url) => {
-        // Check if URL is external (starts with http/https)
-        if (url.startsWith("http://") || url.startsWith("https://")) {
-          return `<a href="${url}" target="_blank" rel="noopener noreferrer">`;
-        }
-        return match;
-      },
-    );
-
-    return cleaned;
-  };
 
   const callMediaHelperListApi = () => {
     const requestOptions = {
