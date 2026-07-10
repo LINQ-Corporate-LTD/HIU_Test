@@ -79,26 +79,46 @@ const VideoSection = () => {
                   "--header-image": `url(${homeVideoSettings?.eventDetailBackImage})`,
                 }}
               >
-                <div>
-                  {/* Annual code */}
-                  <span>
+                {/* OLD TAGLINE CODE */}
+                {/* <div> */}
+                {/* Annual code */}
+                {/* <span>
                     2
                     <sup>nd</sup>
                     {" "}Annual
-                  </span>
-                  <h1 dangerouslySetInnerHTML={{
+                  </span> */}
+                {/* <h1 dangerouslySetInnerHTML={{
                     __html: cleanHtml(themeSettings?.headerContent)
                   }}>
-                  </h1>
-                </div>
-                <p className="HeaderTextLg">
+                  </h1> */}
+                {/* </div> */}
+                {/* <p className="HeaderTextLg">
                   {eventDetails?.eventDate} | {eventDetails?.eventLocation}
                 </p>
                 <p className="HeaderTextSm">
                   {eventDetails?.eventDate}
                   <br />
                   {eventDetails?.eventLocation}
-                </p>
+                </p> */}
+                <div>
+                  <h1 dangerouslySetInnerHTML={{
+                    __html: cleanHtml(themeSettings?.headerContent)
+                  }}>
+                  </h1>
+                </div>
+                <div className="HeaderTextLg">
+                  <p className="annualization">
+                    3
+                    <sup>RD</sup>
+                    {" "}Annual
+                  </p>
+                  <p className="eventDates">
+                    {eventDetails?.eventDate}
+                  </p>
+                  <p className="eventLocation">
+                    {eventDetails?.eventLocation}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
